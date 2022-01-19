@@ -1,0 +1,21 @@
+# Version
+version: '3.8'
+
+services:
+  os:
+    container_name: os_kalilinux
+    build:
+      context: ./
+      dockerfile: docker/os.dockerfile
+    command: bash
+    tty: true
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./docker/deb9.list:/etc/apt/sources.list.d/deb9.list
+    cpuset: 0,1,2,3
+    mem_reservation: 512m
+    mem_limit: 4GB
