@@ -10,9 +10,10 @@ services:
     command: bash
     tty: true
     restart: unless-stopped
-    network_mode: host
     environment:
       - DISPLAY=${DISPLAY}
+    ports:
+        - "1993:1993"
     volumes:
       - /tmp/.X11-unix/os_kalilinux:/tmp/.X11-unix
       - ./docker/deb9.list:/etc/apt/sources.list.d/deb9.list
