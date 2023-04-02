@@ -7,16 +7,35 @@ services:
     build:
       context: ./
       dockerfile: docker/os.dockerfile
+      args:
+          USER_ID: $USER_ID
+          GROUP_ID: $GROUP_ID
+          USER_NAME: $USER_NAME
     command: bash
     tty: true
     restart: unless-stopped
     environment:
       - DISPLAY=${DISPLAY}
-    ports:
-        - "1993:1993"
+    # devices:
+    #   - /dev/video0:/dev/video0
+    # network_mode: host
+    # cap_add:
+    #   - NET_ADMIN
+    # cap_drop:
+    #   - AUDIT_WRITE
+    #   - CHOWN
+    #   - SYS_CHROOT
+    #   - SETFCAP
+    #   - SETGID
+    #   - SETPCAP
+    #   - SETUID
+    #   - NET_BIND_SERVICE
+    #   - FSETID
+    #   - DAC_OVERRIDE
+    #   - FOWNER
+    #   - MKNOD
+    # privileged: true
+    # pid: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./docker/deb9.list:/etc/apt/sources.list.d/deb9.list
-    cpuset: 0,1,2,3
-    mem_reservation: 512m
-    mem_limit: 4GB
